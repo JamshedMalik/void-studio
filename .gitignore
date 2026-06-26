@@ -31,6 +31,18 @@ Thumbs.db
 .vscode/
 .idea/
 
-# temp / claude
+# temp / build cache
 install.log
 dev.log
+tsconfig.tsbuildinfo
+
+# claude code internals
+.agents/
+.claude/
+skills-lock.json
+CLAUDE.md
+
+# old prototype (replaced by Next.js app)
+index.html
+style.css
+script.js
