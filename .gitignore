@@ -40,7 +40,6 @@ tsconfig.tsbuildinfo
 .agents/
 .claude/
 skills-lock.json
-CLAUDE.md
 
 # old prototype (replaced by Next.js app)
 index.html
