@@ -1,0 +1,216 @@
+Enhanced prompts — Void Studio from scratch
+1. Install skills
+
+/install-skill frontend-design
+
+/install-skill ui-ux-pro-max
+
+2. Build the initial website
+
+Build a professional one-page website for a design agency called "Void Studio."
+
+## What Void Studio does
+Logo design, website design, and brand identity systems for companies.
+They are selective — only take a handful of clients per quarter.
+Premium positioning, not a volume shop.
+
+## Brand personality
+- Confident but not arrogant
+- Direct and opinionated — they show you one direction, not forty
+- Thoughtful — they ask uncomfortable questions before picking up a pencil
+- The kind of studio that has strong opinions about type and space
+
+## Design process — USE the frontend-design skill
+1. Ground the concept in the name "Void" — the creative space before a
+   brand is born. This is the conceptual anchor. Build the entire visual
+   language from this idea.
+2. Develop a unique dark palette — NOT the default black + neon green or
+   black + red. Something more considered.
+3. Choose a type pairing specific to this brief. Not interchangeable with
+   any other agency site. Syne is a good candidate for display.
+4. Define one signature design element that makes this site memorable
+   and can be justified by the brief.
+5. Review your concept against the three AI design clichés listed in the
+   skill and revise anything that defaults to those patterns.
+6. Only start coding after the concept is fully written out.
+
+## What to avoid
+- Numbered section markers (01, 02, 03) — these services are parallel,
+  not a sequence
+- Neon accent colors (acid green, vermilion) as the default dark-site move
+- Particle effects, cursor trails, or scattered micro-animations
+- Stock photo placeholders or image-dependent layouts
+- Copy that sounds like marketing: "unleash," "transform," "elevate,"
+  "seamless," "journey," "cutting-edge"
+- Generic sans-serif headlines that look like every other SaaS site
+
+## Tech stack
+Pure HTML + CSS + Vanilla JS. No framework, no build step.
+Google Fonts via <link rel="preconnect">. Mobile-first responsive.
+Respect prefers-reduced-motion throughout. Three files: index.html,
+style.css, script.js.
+
+## Sections (in order)
+
+**Nav** — sticky, transparent → blur + dark on scroll.
+"VOID STUDIO" wordmark left (Syne, small tracking).
+Work / Services / About / [Start a Project] right.
+CTA is a white pill button with void-colored text.
+
+**Hero** — full viewport. This is where the signature design moment
+lives. The concept: before any brand exists, there is a void. Make
+that felt in the design itself.
+
+**Ticker** — thin horizontal marquee strip:
+LOGO DESIGN — BRAND IDENTITY — WEB DESIGN — VISUAL SYSTEMS — ART DIRECTION
+
+**Selected Work** — 6 cards, 3-column grid. Use these projects exactly:
+- Meri · Fintech Rebrand · 2025
+- Kairos · Product Launch Identity · 2025
+- Sable · Luxury Food Brand · 2024
+- North Quarter · Real Estate Identity · 2024
+- Ardent · SaaS Rebrand · 2024
+- Fenix · App Icon & Brand System · 2023
+Cards must feel atmospheric, not like empty placeholders. Use subtle
+color variation to give each card a distinct identity without images.
+
+**Services** — 3 columns side by side: Logo, Web, Brand.
+Each has: a large display name, one sharp one-line tagline, 2-3 direct
+sentences of description.
+- Logo: "A mark that holds at 16px and on a billboard."
+- Web: "Sites that load fast, feel considered, and convert."
+- Brand: "The system that makes everything else make sense."
+
+**About** — Asymmetric two-column layout.
+Left: large italic pull quote — "Great brands don't describe themselves.
+They appear."
+Right: eyebrow label + 2 paragraphs. Voice: direct, confident, slightly
+uncomfortable. "We ask uncomfortable questions, present one direction at
+a time, and finish what we start. If you're looking for a studio that
+shows you forty options, we're not it."
+
+**Contact** — Large display headline: "Ready to exist?"
+Sub: "We take on a small number of clients each quarter. If you're
+building something worth believing in, let's talk."
+Email link: hello@voidstudio.co
+
+**Footer** — VOID STUDIO · © 2026 · Email · Instagram · LinkedIn
+
+## Copy voice
+Short sentences. Active verbs. Zero filler. No adjective unless it earns
+its place. The studio speaks like it designs — with intention.
+
+3. Migrate to Next.js and add the WebGL shader hero
+
+Migrate the website to Next.js 15 + TypeScript + Tailwind CSS + shadcn,
+then replace the hero section with the WebGL shader component below.
+
+## Migration requirements
+- App Router, no src/ directory, import alias @/*
+- Preserve ALL existing design tokens (colors, fonts, spacing) as
+  Tailwind config values and CSS custom properties in globals.css
+- Convert every section to its own file in /components/sections/
+- Nav = client component (needs scroll state)
+- All other sections = server components
+- Use next/font/google for Syne, Outfit, Space Mono
+- Set up shadcn (components.json, lib/utils.ts with cn())
+
+## Hero card specifications (adapt the demo below for Void Studio)
+- Heading: "Before your brand, there is a void."
+- Subtext: "We design the logos, websites, and brand systems
+  that give companies their face."
+- Availability badge: "Taking select clients" with green pulsing dot
+- CTA: LiquidButton "See Our Work" → smooth-scrolls to #work
+- Card max-width: 520px — narrow so the shader dominates on both sides
+- Card borders: border-white/[0.08] outer, border-white/[0.05] inner
+  (more visible against the dark shader than zinc)
+- The WebGL canvas is fixed-position, z-index 0. All other sections
+  have solid backgrounds so the shader only shows through the hero.
+
+## Install these npm packages
+three @types/three @radix-ui/react-slot class-variance-authority
+clsx tailwind-merge lucide-react
+
+## Components to create in /components/ui/
+
+[paste web-gl-shader.tsx here]
+
+[paste liquid-glass-button.tsx here]
+
+## Responsive grid rules
+- Work grid: grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
+- Services grid: grid-cols-1 md:grid-cols-3
+- About: grid-cols-1 md:grid-cols-2
+
+4. Refine the layout and centering
+
+The hero card feels too wide and the heading text is too large — the
+WebGL shader background is barely visible on the sides.
+
+Make these specific changes:
+
+1. Hero card: reduce from max-w-3xl (768px) to max-w-[520px] so the
+   shader is clearly visible and atmospheric on both sides.
+
+2. Hero heading font: reduce from clamp(2.5rem,8vw,6rem) to
+   clamp(2rem,5vw,3.25rem) so the text reads in 3 compact lines
+   rather than filling the entire card.
+
+3. Nav: wrap the logo and links in an inner div with the same
+   max-width as the page content (1200px, centered) so the nav
+   aligns with sections below rather than spanning full viewport edges.
+
+4. All section content: verify it uses a consistent centered container
+   (max-width 1200px, auto margins, clamp horizontal padding).
+
+The goal: the card is a small, focused window in the center of the void
+with the chromatic wave clearly framing it on both sides.
+
+5. Set up git and push to GitHub
+
+Initialize a git repository for this project with a clean .gitignore,
+make an initial commit, then give me the exact commands to push to a
+GitHub repo I'll create manually.
+
+The .gitignore must exclude:
+- node_modules/ and .next/ and out/
+- .env* files
+- tsconfig.tsbuildinfo and *.tsbuildinfo
+- .agents/ and .claude/ and skills-lock.json (Claude Code internals)
+- Any old prototype files (index.html, style.css, script.js) if present
+- OS files (.DS_Store, Thumbs.db)
+
+Stage and commit only the source files:
+app/, components/, lib/, tailwind.config.ts, tsconfig.json,
+next.config.ts, postcss.config.mjs, components.json, package.json,
+package-lock.json, next-env.d.ts, eslint.config.mjs, CLAUDE.md, .gitignore
+
+After the initial commit, give me two commands:
+  git remote add origin https://github.com/USERNAME/void-studio.git
+  git push -u origin master
+
+6. Push any missing files
+
+Check git status and push anything not yet on the remote at
+https://github.com/USERNAME/void-studio.
+
+Rules for what belongs in the repo:
+✅ Include: all source files, CLAUDE.md, package-lock.json,
+   next-env.d.ts, README.md
+❌ Exclude: node_modules, .next, .agents, .claude, skills-lock.json,
+   tsconfig.tsbuildinfo, any old HTML prototype files
+
+7. Add a README
+
+Write a README.md for this project and push it to GitHub.
+
+Include:
+- One-line description of what Void Studio is
+- Tech stack table (Next.js 15, TypeScript, Tailwind v3, shadcn,
+  Three.js, next/font/google)
+- Key features (WebGL shader, liquid glass button, responsive grid,
+  scroll-aware nav, marquee ticker, accessible)
+- Full project structure with a one-line description per file/folder
+- Design tokens table (name, hex value, role)
+- Getting started (npm install, npm run dev, npm run build)
+- Section-by-section page breakdown
